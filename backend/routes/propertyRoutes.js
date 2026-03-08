@@ -5,9 +5,9 @@ import {
   getPropertyById,
   getProperties,
   updateProperty,
-} from "../controllers/adminController";
+} from "../controllers/propertyController.js";
 const router = express.Router();
-import roleBasedAccess from "../middlewares/userAuth";
+import roleBasedAccess from "../middlewares/userAuth.js";
 import { requireAuth } from "@clerk/express";
 
 router.post("/", requireAuth(), roleBasedAccess("admin"), createProperty);

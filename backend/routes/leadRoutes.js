@@ -6,9 +6,9 @@ import {
   deleteLead,
   getLeadById,
   getLeads,
-} from "../controllers/leadContoller";
+} from "../controllers/leadController.js";
 const router = express.Router();
-import roleBasedAccess from "../middlewares/userAuth";
+import roleBasedAccess from "../middlewares/userAuth.js";
 
 router.post("/", createLead);
 router.put("/:id", requireAuth(), roleBasedAccess("admin"), updateLead);

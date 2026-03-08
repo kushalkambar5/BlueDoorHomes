@@ -1,7 +1,7 @@
-import User from "../models/userModel";
-import handleAsyncError from "../middlewares/handleAsyncError";
-import Lead from "../models/leadModel";
-import sendEmail from "../utils/sendEmail";
+import User from "../models/userModel.js";
+import handleAsyncError from "../middlewares/handleAsyncError.js";
+import Lead from "../models/leadModel.js";
+import sendEmail from "../utils/sendEmail.js";
 import dotenv from "dotenv";
 dotenv.config();
 

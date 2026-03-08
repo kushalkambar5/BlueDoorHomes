@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@clerk/react";
 import { Link, useLocation } from "react-router-dom";
 import { UserButton } from "@clerk/react";
-import AddProperty from "../pages/AddProperty";
+import CreateProperty from "../pages/CreateProperty";
 import { HashLink } from "react-router-hash-link";
 
 function Navbar() {
@@ -80,9 +80,14 @@ function Navbar() {
 
           {isSignedIn && (
             <div className="flex items-center gap-3 border-l border-[#6B7280] pl-4">
-              {/* Note: In a real app AddProperty might be a link, but this matches the existing structure */}
-              <div className="text-sm font-medium text-[#F8FAFC] transition-colors hover:text-[#C9A227]">
-                <AddProperty />
+              {/* Note: In a real app CreateProperty might be a link, but this matches the existing structure */}
+              <div className="text-sm font-medium">
+                <Link
+                  to="/create-property"
+                  className="rounded-md border border-[#C9A227] px-3 py-1.5 text-[#C9A227] transition-all duration-200 hover:bg-[#C9A227] hover:text-[#0F172A]"
+                >
+                  Create Property
+                </Link>
               </div>
               <UserButton afterSignOutUrl="/" />
             </div>
@@ -93,6 +98,12 @@ function Navbar() {
         <div className="flex items-center md:hidden">
           {isSignedIn && (
             <div className="mr-4 mt-1">
+              <Link
+                to="/create-property"
+                className="inline-block mr-3 rounded-md border border-[#C9A227] px-3 py-1.5 text-[#C9A227] text-sm font-medium transition-all duration-200 hover:bg-[#C9A227] hover:text-[#0F172A]"
+              >
+                Create Property
+              </Link>
               <UserButton afterSignOutUrl="/" />
             </div>
           )}
@@ -179,7 +190,12 @@ function Navbar() {
 
             {isSignedIn && (
               <div className="mt-2 text-sm font-medium text-[#F8FAFC]">
-                <AddProperty />
+                <Link
+                  to="/create-property"
+                  className="inline-block rounded-md border border-[#C9A227] px-3 py-1.5 text-[#C9A227] transition-all duration-200 hover:bg-[#C9A227] hover:text-[#0F172A]"
+                >
+                  Create Property
+                </Link>
               </div>
             )}
           </div>
