@@ -1,31 +1,35 @@
-import dotenv from 'dotenv'
-dotenv.config();
-import jwt from 'jsonwebtoken'
-import handleAsyncError from './handleAsyncError.js';
-import HandleError from '../utils/handleError.js'
-import User from '../models/userModel.js'
+import User from "../models/userModel.js";
+import HandleError from "../utils/handleError.js";
+import handleAsyncError from "./handleAsyncError.js";
 
+const roleBasedAccess = (...roles) => {
+  return handleAsyncError(async (req, res, next) => {
 
-export const verifyUserAuth = handleAsyncError(async(req,res,next)=>{
-    const token = req.cookies.token;
-    if(!token){
-        return next(new HandleError('Authentication is missing! Please login to access resource', 401));
+    const clerkId = req.auth?.userId;
+
+    if (!clerkId) {
+      return next(new HandleError("Unauthorized", 401));
     }
-    const decodedData = jwt.verify(token,process.env.JWT_SECRET);
-    const user = await User.findById(decodedData.id);
+
+    const user = await User.findOne({ clerkId });
+
     if (!user) {
-        return next(new HandleError("User not found", 404));
+      return next(new HandleError("User not found in database", 404));
     }
 
-    req.user = user; 
+    if (!roles.includes(user.role)) {
+      return next(
+        new HandleError(
+          `Role '${user.role}' is not allowed to access this resource`,
+          403
+        )
+      );
+    }
+
+    req.user = user; // attach user to request if needed
+
     next();
-})
+  });
+};
 
-export const roleBasedAccess=(...roles)=>{
-    return(req,res,next)=>{
-        if(!roles.includes(req.user.role)){
-            return next(new HandleError(`Role - ${req.user.role} is not allowed to access the resource`, 403))
-        }
-        next();
-    }
-}
+export default roleBasedAccess;

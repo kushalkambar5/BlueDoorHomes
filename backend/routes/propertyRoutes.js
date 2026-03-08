@@ -8,10 +8,11 @@ import {
 } from "../controllers/adminController";
 const router = express.Router();
 import roleBasedAccess from "../middlewares/userAuth";
+import { requireAuth } from "@clerk/express";
 
-router.post("/", roleBasedAccess("admin"), createProperty);
-router.put("/:id", roleBasedAccess("admin"), updateProperty);
-router.delete("/:id", roleBasedAccess("admin"), deleteProperty);
+router.post("/", requireAuth(), roleBasedAccess("admin"), createProperty);
+router.put("/:id", requireAuth(), roleBasedAccess("admin"), updateProperty);
+router.delete("/:id", requireAuth(), roleBasedAccess("admin"), deleteProperty);
 router.get("/:id", getPropertyById);
 router.get("/", getProperties);
 
