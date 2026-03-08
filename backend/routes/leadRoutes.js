@@ -11,9 +11,9 @@ const router = express.Router();
 import roleBasedAccess from "../middlewares/userAuth.js";
 
 router.post("/", createLead);
-router.put("/:id", requireAuth(), roleBasedAccess("admin"), updateLead);
-router.delete("/:id", requireAuth(), roleBasedAccess("admin"), deleteLead);
-router.get("/:id", requireAuth(), roleBasedAccess("admin"), getLeadById);
-router.get("/", requireAuth(), roleBasedAccess("admin"), getLeads);
+router.put("/:id", roleBasedAccess("admin"), updateLead);
+router.delete("/:id", roleBasedAccess("admin"), deleteLead);
+router.get("/:id", roleBasedAccess("admin"), getLeadById);
+router.get("/", roleBasedAccess("admin"), getLeads);
 
 export default router;
