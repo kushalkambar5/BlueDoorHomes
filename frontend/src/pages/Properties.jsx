@@ -3,9 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { getProperties, deleteProperty } from "../api/propertyApi";
 import { useAuth } from "@clerk/react";
 import PageNavbar from "../components/PageNavbar";
+import { useUserContext } from "../context/UserContext";
 
 function Properties() {
   const { isSignedIn } = useAuth();
+  const { role } = useUserContext();
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -55,7 +57,7 @@ function Properties() {
           <h1 className="text-3xl font-bold text-primary">
             Properties Listing
           </h1>
-          {isSignedIn && (
+          {isSignedIn && role === "admin" && (
             <Link
               to="/create-property"
               className="bg-cta hover:bg-blue-800 text-white font-semibold py-2 px-6 rounded-md shadow-md transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg flex items-center gap-2"
@@ -161,7 +163,7 @@ function Properties() {
                   </div>
 
                   {/* Actions */}
-                  {isSignedIn && (
+                  {isSignedIn && role === "admin" && (
                     <div className="flex justify-between items-center mt-2 gap-3 pt-4 border-t border-gray-100">
                       <button
                         onClick={() =>

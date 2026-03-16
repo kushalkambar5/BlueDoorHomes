@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const BANNER_IMAGES = [
-  "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  "https://images.pexels.com/photos/53610/large-home-residential-house-architecture-53610.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  "https://images.pexels.com/photos/208736/pexels-photo-208736.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+  "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+  "https://images.unsplash.com/photo-1628624747186-a941c476b7ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+  "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+  "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
 ];
 
 function Landing() {
@@ -21,22 +21,25 @@ function Landing() {
   return (
     <div className="relative w-full h-screen overflow-hidden bg-primary">
       {/* Background Slider */}
-      {BANNER_IMAGES.map((imgUrl, index) => (
-        <div
-          key={index}
-          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
-            index === currentSlide ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <img
-            src={imgUrl}
-            alt={`Luxury Real Estate ${index + 1}`}
-            className="w-full h-full object-cover"
-          />
-          {/* Dark Overlay for better text readability */}
-          <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-        </div>
-      ))}
+      <div 
+        className="absolute inset-0 flex transition-transform duration-1000 ease-in-out"
+        style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+      >
+        {BANNER_IMAGES.map((imgUrl, index) => (
+          <div
+            key={index}
+            className="relative w-full h-full flex-shrink-0"
+          >
+            <img
+              src={imgUrl}
+              alt={`Luxury Real Estate ${index + 1}`}
+              className="w-full h-full object-cover"
+            />
+            {/* Dark Overlay for better text readability */}
+            <div className="absolute inset-0 bg-black/50"></div>
+          </div>
+        ))}
+      </div>
 
       {/* Hero Content Overlay */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white pt-20">

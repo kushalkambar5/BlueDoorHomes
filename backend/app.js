@@ -7,6 +7,7 @@ import leadRoutes from "./routes/leadRoutes.js";
 import propertyRoutes from "./routes/propertyRoutes.js";
 import cloudinaryRoutes from "./routes/cloudinaryRoutes.js";
 import webhookRoutes from "./routes/webhookRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 import cors from "cors";
 
 app.use(
@@ -31,6 +32,7 @@ app.use(clerkMiddleware());
 app.use("/api/v1/properties", propertyRoutes);
 app.use("/api/v1/leads", leadRoutes);
 app.use("/api/v1/cloudinary", cloudinaryRoutes);
+app.use("/api/v1/users", userRoutes);
 
 app.use(errorMiddleware);
 

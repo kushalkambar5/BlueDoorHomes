@@ -1,10 +1,12 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserButton, useAuth } from "@clerk/react";
+import { useUserContext } from "../context/UserContext";
 
 function PageNavbar({ title }) {
   const navigate = useNavigate();
   const { isSignedIn } = useAuth();
+  const { role } = useUserContext();
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-[#F8FAFC] bg-[#0F172A] px-4 py-3 shadow-md">
@@ -43,12 +45,14 @@ function PageNavbar({ title }) {
           </Link>
           {isSignedIn && (
             <div className="border-l border-[#6B7280] pl-3 ml-1 flex items-center gap-3">
-              <Link
-                to="/create-property"
-                className="hidden sm:block rounded-md border border-[#C9A227] px-3 py-1.5 text-sm text-[#C9A227] transition-all duration-200 hover:bg-[#C9A227] hover:text-[#0F172A]"
-              >
-                Create Property
-              </Link>
+              {role === "admin" && (
+                <Link
+                  to="/create-property"
+                  className="hidden sm:block rounded-md border border-[#C9A227] px-3 py-1.5 text-sm text-[#C9A227] transition-all duration-200 hover:bg-[#C9A227] hover:text-[#0F172A]"
+                >
+                  Create Property
+                </Link>
+              )}
               <UserButton afterSignOutUrl="/" />
             </div>
           )}

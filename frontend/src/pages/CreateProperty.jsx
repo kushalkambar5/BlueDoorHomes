@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { createProperty } from "../api/propertyApi";
-import { uploadToCloudinary } from "../services/uploadToCloudinary";
+import useAxios from "../api/useAxios";
 import PageNavbar from "../components/PageNavbar";
 
 function CreateProperty() {
   const navigate = useNavigate();
+  const api = useAxios();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
@@ -45,11 +45,32 @@ function CreateProperty() {
       // 1. Upload media to cloudinary
       const uploadedMedia = [];
       for (const file of mediaFiles) {
-        const result = await uploadToCloudinary(file);
+        // Fetch signature using authenticated api
+        const sigRes = await api.get("/api/v1/cloudinary/signature");
+        const { timestamp, signature } = sigRes.data;
+        const uploadFormData = new FormData();
+        uploadFormData.append("file", file);
+        uploadFormData.append("timestamp", timestamp);
+        uploadFormData.append("signature", signature);
+        uploadFormData.append(
+          "api_key",
+          import.meta.env.VITE_CLOUDINARY_API_KEY || "975383774889771",
+        );
+
+        const cloudRes = await fetch(
+          `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "dye4bwzse"}/auto/upload`,
+          { method: "POST", body: uploadFormData },
+        );
+        const cloudData = await cloudRes.json();
+        if (!cloudRes.ok)
+          throw new Error(
+            cloudData.error?.message || "Cloudinary upload failed",
+          );
+
         uploadedMedia.push({
-          url: result.url,
-          public_id: result.public_id,
-          type: result.type,
+          url: cloudData.secure_url,
+          public_id: cloudData.public_id,
+          type: cloudData.resource_type,
         });
       }
 
@@ -75,7 +96,7 @@ function CreateProperty() {
       };
 
       // 3. Call API
-      await createProperty(payload);
+      await api.post("/api/v1/properties", payload);
       alert("Property created successfully!");
       navigate("/properties");
     } catch (error) {

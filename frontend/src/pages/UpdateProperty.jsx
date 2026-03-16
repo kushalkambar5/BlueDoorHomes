@@ -24,7 +24,6 @@ function UpdateProperty() {
     city: "",
     locality: "",
     address: "",
-    address: "",
     googleMapsLink: "",
   });
   const [mediaFiles, setMediaFiles] = useState([]);
