@@ -169,7 +169,7 @@ function CreateProperty() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
               <label className="block text-sm font-semibold text-text-primary mb-1">
-                Price
+                Price (₹)
               </label>
               <input
                 type="number"
@@ -182,7 +182,7 @@ function CreateProperty() {
             </div>
             <div>
               <label className="block text-sm font-semibold text-text-primary mb-1">
-                Price/sqft
+                Price/sqft (₹)
               </label>
               <input
                 type="number"

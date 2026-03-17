@@ -8,9 +8,10 @@ import { useUserContext } from "../context/UserContext";
 
 function Navbar() {
   const { isSignedIn } = useAuth();
-  const { role } = useUserContext();
+  const { role, dbUser, isLoading, error } = useUserContext();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -84,12 +85,24 @@ function Navbar() {
             <div className="flex items-center gap-3 border-l border-[#6B7280] pl-4">
               {/* Note: In a real app CreateProperty might be a link, but this matches the existing structure */}
               {role === "admin" && (
-                <div className="text-sm font-medium">
+                <div className="flex items-center gap-3 text-sm font-medium">
                   <Link
                     to="/create-property"
                     className="rounded-md border border-[#C9A227] px-3 py-1.5 text-[#C9A227] transition-all duration-200 hover:bg-[#C9A227] hover:text-[#0F172A]"
                   >
-                    Create Property
+                    Add Properties
+                  </Link>
+                  <Link
+                    to="/create-testimonials"
+                    className="rounded-md border border-[#C9A227] px-3 py-1.5 text-[#C9A227] transition-all duration-200 hover:bg-[#C9A227] hover:text-[#0F172A]"
+                  >
+                    Add Testimonials
+                  </Link>
+                  <Link
+                    to="/user-forms"
+                    className="rounded-md border border-[#C9A227] px-3 py-1.5 text-[#C9A227] transition-all duration-200 hover:bg-[#C9A227] hover:text-[#0F172A]"
+                  >
+                    User Forms
                   </Link>
                 </div>
               )}
@@ -103,12 +116,26 @@ function Navbar() {
           {isSignedIn && (
             <div className="mr-4 mt-1 flex items-center">
               {role === "admin" && (
-                <Link
-                  to="/create-property"
-                  className="inline-block mr-3 rounded-md border border-[#C9A227] px-3 py-1.5 text-[#C9A227] text-sm font-medium transition-all duration-200 hover:bg-[#C9A227] hover:text-[#0F172A]"
-                >
-                  Create Property
-                </Link>
+                <div className="hidden sm:flex items-center gap-2 mr-3">
+                  <Link
+                    to="/create-property"
+                    className="inline-block rounded-md border border-[#C9A227] px-3 py-1.5 text-[#C9A227] text-sm font-medium transition-all duration-200 hover:bg-[#C9A227] hover:text-[#0F172A]"
+                  >
+                    Add Properties
+                  </Link>
+                  <Link
+                    to="/create-testimonials"
+                    className="inline-block rounded-md border border-[#C9A227] px-3 py-1.5 text-[#C9A227] text-sm font-medium transition-all duration-200 hover:bg-[#C9A227] hover:text-[#0F172A]"
+                  >
+                    Add Testimonials
+                  </Link>
+                  <Link
+                    to="/user-forms"
+                    className="inline-block rounded-md border border-[#C9A227] px-3 py-1.5 text-[#C9A227] text-sm font-medium transition-all duration-200 hover:bg-[#C9A227] hover:text-[#0F172A]"
+                  >
+                    User Forms
+                  </Link>
+                </div>
               )}
               <UserButton afterSignOutUrl="/" />
             </div>
@@ -195,12 +222,24 @@ function Navbar() {
             </Link>
 
             {isSignedIn && role === "admin" && (
-              <div className="mt-2 text-sm font-medium text-[#F8FAFC]">
+              <div className="mt-2 flex flex-col space-y-2 text-sm font-medium text-[#F8FAFC]">
                 <Link
                   to="/create-property"
-                  className="inline-block rounded-md border border-[#C9A227] px-3 py-1.5 text-[#C9A227] transition-all duration-200 hover:bg-[#C9A227] hover:text-[#0F172A]"
+                  className="block w-fit rounded-md border border-[#C9A227] px-3 py-1.5 text-[#C9A227] transition-all duration-200 hover:bg-[#C9A227] hover:text-[#0F172A]"
                 >
-                  Create Property
+                  Add Properties
+                </Link>
+                <Link
+                  to="/create-testimonials"
+                  className="block w-fit rounded-md border border-[#C9A227] px-3 py-1.5 text-[#C9A227] transition-all duration-200 hover:bg-[#C9A227] hover:text-[#0F172A]"
+                >
+                  Add Testimonials
+                </Link>
+                <Link
+                  to="/user-forms"
+                  className="block w-fit rounded-md border border-[#C9A227] px-3 py-1.5 text-[#C9A227] transition-all duration-200 hover:bg-[#C9A227] hover:text-[#0F172A]"
+                >
+                  User Forms
                 </Link>
               </div>
             )}

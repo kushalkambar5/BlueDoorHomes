@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getPropertyById, updateProperty } from "../api/propertyApi";
+import {
+  getPropertyById,
+  updateProperty,
+  deletePropertyMedia,
+} from "../api/propertyApi";
 import { uploadToCloudinary } from "../services/uploadToCloudinary";
 import PageNavbar from "../components/PageNavbar";
 
@@ -60,7 +64,6 @@ function UpdateProperty() {
           setExistingMedia(data.mediaList);
         }
       } catch (error) {
-        console.error("Error fetching property:", error);
         alert("Error fetching property data");
       } finally {
         setFetching(false);
@@ -82,6 +85,18 @@ function UpdateProperty() {
     setMediaFiles(Array.from(e.target.files));
   };
 
+  const handleMediaDelete = async (mediaId) => {
+    if (window.confirm("Are you sure you want to delete this media?")) {
+      try {
+        await deletePropertyMedia(id, mediaId);
+        setExistingMedia(existingMedia.filter((m) => m._id !== mediaId));
+        alert("Media deleted successfully");
+      } catch (error) {
+        alert("Failed to delete media");
+      }
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -97,7 +112,7 @@ function UpdateProperty() {
         });
       }
 
-      // Combine existing and new media (simplified - if backend expects full array)
+      // Combine existing and new media
       const allMedia = [...existingMedia, ...newUploadedMedia];
 
       // 2. Prepare payload
@@ -126,7 +141,6 @@ function UpdateProperty() {
       alert("Property updated successfully!");
       navigate("/properties");
     } catch (error) {
-      console.error(error);
       alert("Error updating property: " + (error.message || "Unknown error"));
     } finally {
       setLoading(false);
@@ -202,7 +216,7 @@ function UpdateProperty() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
               <label className="block text-sm font-semibold text-text-primary mb-1">
-                Price
+                Price (₹)
               </label>
               <input
                 type="number"
@@ -215,7 +229,7 @@ function UpdateProperty() {
             </div>
             <div>
               <label className="block text-sm font-semibold text-text-primary mb-1">
-                Price/sqft
+                Price/sqft (₹)
               </label>
               <input
                 type="number"
@@ -404,16 +418,18 @@ function UpdateProperty() {
                 <p className="text-sm font-bold text-primary mb-3">
                   Existing Media
                 </p>
-                <div className="flex gap-3 overflow-x-auto pb-2">
+                <div className="flex gap-4 overflow-x-auto pb-2">
                   {existingMedia.map((m, index) => (
                     <div
-                      key={index}
-                      className="w-20 h-20 border rounded-md shadow-sm bg-white flex-shrink-0 flex items-center justify-center overflow-hidden"
+                      key={m._id || index}
+                      className="relative w-24 h-24 border rounded-lg shadow-sm bg-white flex-shrink-0 group overflow-hidden"
                     >
                       {m.type === "video" ? (
-                        <span className="text-xs font-semibold text-text-secondary">
-                          Video
-                        </span>
+                        <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+                          <span className="text-[10px] font-bold text-white">
+                            Video
+                          </span>
+                        </div>
                       ) : (
                         <img
                           src={m.url}
@@ -421,6 +437,26 @@ function UpdateProperty() {
                           className="w-full h-full object-cover"
                         />
                       )}
+                      {/* Delete Overlay */}
+                      <button
+                        type="button"
+                        onClick={() => handleMediaDelete(m._id)}
+                        className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <svg
+                          className="w-6 h-6 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          />
+                        </svg>
+                      </button>
                     </div>
                   ))}
                 </div>

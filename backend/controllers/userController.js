@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import HandleError from "../utils/handleError.js";
 import handleAsyncError from "../middlewares/handleAsyncError.js";
+import { getAuth } from "@clerk/express";
 
 /**
  * @desc    Get current user profile
@@ -8,7 +9,8 @@ import handleAsyncError from "../middlewares/handleAsyncError.js";
  * @access  Private
  */
 export const getUserProfile = handleAsyncError(async (req, res, next) => {
-  const clerkId = req.auth?.userId;
+  const auth = getAuth(req);
+  const clerkId = auth?.userId;
   console.log("➡️ API GET /me Hit | clerkId from auth token:", clerkId);
 
   if (!clerkId) {

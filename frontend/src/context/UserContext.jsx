@@ -7,13 +7,15 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const { isSignedIn, getToken } = useAuth();
+  const { isLoaded, isSignedIn, getToken, userId } = useAuth();
   const [dbUser, setDbUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUser = async () => {
+      if (!isLoaded) return;
+      
       if (!isSignedIn) {
         setDbUser(null);
         return;
@@ -33,23 +35,22 @@ export const UserProvider = ({ children }) => {
         });
 
         if (response.data.success) {
-          console.log("Fetched User Data from Backend:", response.data.user);
           setDbUser(response.data.user);
         }
       } catch (err) {
         console.error("Failed to fetch user data:", err);
-        setError(err.message || "Failed to fetch user data");
+        setError(err.response?.data?.message || err.message || "Failed to fetch user data");
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchUser();
-  }, [isSignedIn, getToken]);
+  }, [isLoaded, isSignedIn, userId, getToken]);
 
   const value = {
     dbUser,
-    role: dbUser?.role || "user",
+    role: isSignedIn ? (dbUser?.role || "user") : null,
     isLoading,
     error,
   };
@@ -64,3 +65,5 @@ export const useUserContext = () => {
   }
   return context;
 };
+
+export default UserContext;

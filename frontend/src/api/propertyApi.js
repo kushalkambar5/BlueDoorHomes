@@ -26,3 +26,10 @@ export const deleteProperty = async (id) => {
   const response = await axiosInstance.delete(`${API_URL}/${id}`);
   return response.data;
 };
+
+export const deletePropertyMedia = async (propertyId, mediaId) => {
+  const response = await axiosInstance.delete(
+    `${API_URL}/${propertyId}/media/${mediaId}`,
+  );
+  return response.data;
+};

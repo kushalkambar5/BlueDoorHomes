@@ -1,24 +1,16 @@
 import User from "../models/userModel.js";
 import HandleError from "../utils/handleError.js";
 import handleAsyncError from "./handleAsyncError.js";
-import { requireAuth } from "@clerk/express";
+import { requireAuth, getAuth } from "@clerk/express";
 
 const roleBasedAccess = (...roles) => {
   return [
-    requireAuth(), // This ensures req.auth is populated and valid
+    requireAuth(), // This ensures the request is authenticated
     handleAsyncError(async (req, res, next) => {
-      console.log("🔒 roleBasedAccess Middleware Trigerred");
-      console.log(
-        "➡️ req.headers.authorization:",
-        req.headers.authorization ? "Present" : "Missing",
-      );
-      console.log("➡️ req.auth object:", JSON.stringify(req.auth));
-
-      const clerkId = req.auth?.userId;
-      console.log("➡️ Extracted clerkId:", clerkId);
+      const auth = getAuth(req);
+      const clerkId = auth?.userId;
 
       if (!clerkId) {
-        console.log("❌ Unauthorized: clerkId is missing from req.auth");
         return next(new HandleError("Unauthorized", 401));
       }
 
