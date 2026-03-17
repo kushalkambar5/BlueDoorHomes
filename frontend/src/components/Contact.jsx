@@ -108,7 +108,7 @@ function Contact() {
             {/* Social Links (Optional, placed at bottom) */}
             <div className="mt-16 flex gap-4">
               <a 
-                href="https://www.facebook.com" 
+                href="https://www.facebook.com/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="h-10 w-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-[#C9A227] hover:text-[#0F172A] transition-all duration-300"
