@@ -11,6 +11,7 @@ import PropertyInquiry from "./pages/PropertyInquiry";
 import CreateTestimonial from "./pages/CreateTestimonial";
 import EditTestimonial from "./pages/EditTestimonial";
 import UserForms from "./pages/UserForms";
+import TestimonialsAdmin from "./pages/TestimonialsAdmin";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/user-forms" element={<UserForms />} />
         <Route path="/create-testimonials" element={<CreateTestimonial />} />
         <Route path="/edit-testimonial/:id" element={<EditTestimonial />} />
+        <Route path="/testimonials-admin" element={<TestimonialsAdmin />} />
         </Routes>
       </Router>
     </>

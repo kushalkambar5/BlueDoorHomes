@@ -45,7 +45,7 @@ function Landing() {
       {/* Hero Content Overlay */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white pt-20">
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 drop-shadow-lg">
-          Welcome to <span className="text-accent">BlueDoorHomes</span>
+          Welcome to <span className="text-[#1D4ED8]">Blue</span>Door<span className="text-[#C9A227]">Homes</span>
         </h1>
         <p className="text-xl md:text-2xl font-light mb-10 max-w-3xl drop-shadow-md text-gray-200">
           Find your dream home with premium real estate listings, expert

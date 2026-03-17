@@ -9,7 +9,7 @@ function About() {
           {/* Content Side */}
           <div className="flex flex-col justify-center max-w-2xl">
             <h2 className="text-sm font-semibold uppercase tracking-widest text-[#C9A227] mb-3">
-              About BlueDoorHomes
+              About <span className="text-[#1D4ED8]">Blue</span>Door<span className="text-[#C9A227]">Homes</span>
             </h2>
             <h3 className="text-3xl font-bold tracking-tight text-[#0F172A] sm:text-4xl md:text-5xl mb-6 leading-tight">
               Building Trust, <br />
@@ -73,20 +73,6 @@ function About() {
               </div>
             </div>
 
-            {/* Floating Glassmorphism Badge */}
-            <div className="absolute bottom-10 left-[-20px] md:left-[-40px] z-20 rounded-xl bg-white/80 backdrop-blur-md p-4 shadow-xl border border-white/40 max-w-[200px] transform hover:-translate-y-1 transition-transform duration-300">
-              <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1D4ED8]/10 text-[#1D4ED8]">
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-[#0F172A]">Premium</p>
-                  <p className="text-xs text-[#6B7280]">Quality Assured</p>
-                </div>
-              </div>
-            </div>
             
           </div>
         </div>

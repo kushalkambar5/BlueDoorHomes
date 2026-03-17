@@ -10,8 +10,8 @@ export const createLead = handleAsyncError(async (req, res) => {
     try {
         const lead = await Lead.create(req.body);
         await sendEmail({
-            email: process.env.SMTP_EMAIL,
-            subject: "New Lead",
+            email: process.env.EMAILADDRESS || process.env.SMTP_EMAIL,
+            subject: "New Lead Notification - BlueDoorHomes",
             message: `New lead created: ${lead}`,
         });
         res.status(201).json(lead);

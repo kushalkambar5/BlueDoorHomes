@@ -12,101 +12,97 @@ function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-
   // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [location]);
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-[#F8FAFC] bg-[#0F172A] px-4 py-3 shadow-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between">
+    <nav className="sticky top-0 z-50 w-full transition-all duration-300 border-b border-white/5 bg-[#0F172A]/90 backdrop-blur-md px-4 py-4 shadow-xl">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
         {/* Logo */}
         <Link
           to="/"
-          className="text-xl font-bold tracking-wide text-[#F8FAFC] transition-colors hover:text-[#C9A227]"
+          className="shrink-0 text-xl font-extrabold tracking-tight text-white transition-all hover:text-[#C9A227]"
         >
-          BlueDoorHomes
+          <span className="text-[#1D4ED8]">Blue</span>
+          <span className="text-white">Door</span>
+          <span className="text-[#C9A227]">Homes</span>
         </Link>
 
         {/* Desktop Main Links */}
-        <div className="hidden items-center gap-6 md:flex">
-          <Link
-            to="/"
-            className="text-sm font-medium text-[#F8FAFC] transition-colors hover:text-[#C9A227]"
-          >
-            Home
-          </Link>
+        <div className="hidden items-center gap-x-4 lg:gap-x-6 xl:gap-x-8 md:flex">
           <Link
             to="/properties"
-            className="text-sm font-medium text-[#F8FAFC] transition-colors hover:text-[#C9A227]"
+            className="whitespace-nowrap text-xs lg:text-sm font-bold uppercase tracking-widest text-white/70 transition-all hover:text-[#C9A227] hover:scale-105"
           >
             Properties
           </Link>
           <HashLink
             smooth
             to="/#about"
-            className="text-sm font-medium text-[#F8FAFC] transition-colors hover:text-[#C9A227]"
+            className="whitespace-nowrap text-xs lg:text-sm font-bold uppercase tracking-widest text-white/70 transition-all hover:text-[#C9A227] hover:scale-105"
           >
             About Us
           </HashLink>
           <HashLink
             smooth
             to="/#testimonials"
-            className="text-sm font-medium text-[#F8FAFC] transition-colors hover:text-[#C9A227]"
+            className="whitespace-nowrap text-xs lg:text-sm font-bold uppercase tracking-widest text-white/70 transition-all hover:text-[#C9A227] hover:scale-105"
           >
             Testimonials
           </HashLink>
           <HashLink
             smooth
             to="/#contact"
-            className="text-sm font-medium text-[#F8FAFC] transition-colors hover:text-[#C9A227]"
+            className="whitespace-nowrap text-xs lg:text-sm font-bold uppercase tracking-widest text-white/70 transition-all hover:text-[#C9A227] hover:scale-105"
           >
             Contact
           </HashLink>
         </div>
 
         {/* Desktop CTA Buttons & Auth */}
-        <div className="hidden items-center gap-4 md:flex">
+        <div className="hidden items-center gap-x-3 lg:gap-x-4 md:flex">
           <a
-            href="tel:+919999999999"
-            className="text-sm font-medium text-[#C9A227] transition-colors hover:text-white"
+            href={`tel:+91${import.meta.env.VITE_PHONENO}`}
+            className="whitespace-nowrap text-[10px] lg:text-xs font-black tracking-tighter text-[#C9A227] transition-all hover:text-white hover:scale-110"
           >
             Call Now
           </a>
           <Link
             to="/property/inquiry/-"
-            className="rounded-md bg-[#1D4ED8] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-800"
+            className="whitespace-nowrap rounded-full bg-[#1D4ED8] px-3 py-2 lg:px-5 lg:py-2.5 text-[10px] lg:text-xs font-black uppercase tracking-tighter text-white shadow-[0_10px_20px_rgba(29,78,216,0.2)] transition-all hover:bg-blue-700 hover:scale-105 active:scale-95"
           >
             Request Enquiry
           </Link>
 
           {isSignedIn && (
-            <div className="flex items-center gap-3 border-l border-[#6B7280] pl-4">
-              {/* Note: In a real app CreateProperty might be a link, but this matches the existing structure */}
+            <div className="flex items-center gap-x-2 lg:gap-x-3 border-l border-white/10 pl-3 lg:pl-4">
               {role === "admin" && (
-                <div className="flex items-center gap-3 text-sm font-medium">
+                <div className="flex items-center gap-x-1.5 lg:gap-x-2">
                   <Link
                     to="/create-property"
-                    className="rounded-md border border-[#C9A227] px-3 py-1.5 text-[#C9A227] transition-all duration-200 hover:bg-[#C9A227] hover:text-[#0F172A]"
+                    className="whitespace-nowrap rounded-lg border border-[#C9A227]/40 px-2 py-1 lg:px-3 lg:py-1.5 text-[10px] lg:text-xs text-[#C9A227] font-bold tracking-tight transition-all duration-300 hover:bg-[#C9A227] hover:text-[#0F172A] hover:scale-105"
                   >
                     Add Properties
                   </Link>
                   <Link
-                    to="/create-testimonials"
-                    className="rounded-md border border-[#C9A227] px-3 py-1.5 text-[#C9A227] transition-all duration-200 hover:bg-[#C9A227] hover:text-[#0F172A]"
+                    to="/testimonials-admin"
+                    className="whitespace-nowrap rounded-lg border border-[#C9A227]/40 px-2 py-1 lg:px-3 lg:py-1.5 text-[10px] lg:text-xs text-[#C9A227] font-bold tracking-tight transition-all duration-300 hover:bg-[#C9A227] hover:text-[#0F172A] hover:scale-105"
                   >
-                    Add Testimonials
+                    Testimonials
                   </Link>
                   <Link
                     to="/user-forms"
-                    className="rounded-md border border-[#C9A227] px-3 py-1.5 text-[#C9A227] transition-all duration-200 hover:bg-[#C9A227] hover:text-[#0F172A]"
+                    className="whitespace-nowrap rounded-lg border border-[#C9A227]/40 px-2 py-1 lg:px-3 lg:py-1.5 text-[10px] lg:text-xs text-[#C9A227] font-bold tracking-tight transition-all duration-300 hover:bg-[#C9A227] hover:text-[#0F172A] hover:scale-105"
                   >
-                    User Forms
+                    Leads
                   </Link>
                 </div>
               )}
-              <UserButton afterSignOutUrl="/" />
+              <div className="shrink-0">
+                <UserButton afterSignOutUrl="/" />
+              </div>
             </div>
           )}
         </div>
@@ -174,12 +170,6 @@ function Navbar() {
       {mobileMenuOpen && (
         <div className="mt-3 flex flex-col space-y-3 pb-3 border-t border-[#6B7280] pt-3 md:hidden">
           <Link
-            to="/"
-            className="block text-sm font-medium text-[#F8FAFC] hover:text-[#C9A227]"
-          >
-            Home
-          </Link>
-          <Link
             to="/properties"
             className="block text-sm font-medium text-[#F8FAFC] hover:text-[#C9A227]"
           >
@@ -209,10 +199,10 @@ function Navbar() {
 
           <div className="mt-4 flex flex-col space-y-3 pt-4 border-t border-[#6B7280]">
             <a
-              href="tel:+919999999999"
+              href={`tel:+91${import.meta.env.VITE_PHONENO}`}
               className="text-sm font-medium text-[#C9A227]"
             >
-              Call Now: +91 99999 99999
+              Call Now: +91 {import.meta.env.VITE_PHONENO}
             </a>
             <Link
               to="/property/inquiry/-"

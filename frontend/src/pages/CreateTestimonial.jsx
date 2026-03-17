@@ -83,7 +83,7 @@ function CreateTestimonial() {
       // 3. Create Testimonial
       await createTestimonial(payload);
       alert("Testimonial created successfully!");
-      navigate("/");
+      navigate("/testimonials-admin");
     } catch (error) {
       console.error("Failed to create testimonial", error);
       alert("Error: " + (error.message || "Failed to create testimonial"));
@@ -197,7 +197,7 @@ function CreateTestimonial() {
               </button>
               <button
                 type="button"
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/testimonials-admin")}
                 className="flex-1 bg-white hover:bg-gray-50 text-text-primary border border-gray-200 font-bold py-3 rounded-xl transition-all"
               >
                 Cancel

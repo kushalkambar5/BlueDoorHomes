@@ -6,25 +6,28 @@ function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#0F172A] border-t border-[#6B7280]">
+    <footer className="bg-[#0F172A] border-t border-white/10 relative">
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {/* Brand & Phone */}
           <div className="flex flex-col space-y-4">
-            <span className="text-xl font-bold tracking-wide text-[#F8FAFC]">
-              BlueDoorHomes
-            </span>
-            <div className="text-[#6B7280] text-sm leading-relaxed">
+            <div className="text-xl font-extrabold tracking-tight">
+              <span className="text-[#1D4ED8]">Blue</span>
+              <span className="text-white">Door</span>
+              <span className="text-[#C9A227]">Homes</span>
+            </div>
+            <div className="text-white/40 text-sm leading-relaxed">
               Find your dream home with premium real estate listings, expert
               guidance, and trusted service.
             </div>
             <div className="mt-2 flex items-center gap-2">
               <span className="text-[#6B7280] text-sm">Call Now:</span>
               <a
-                href="tel:+91XXXXXXXXXX"
-                className="text-base font-medium text-[#C9A227] hover:underline"
+                href={`tel:+91${import.meta.env.VITE_PHONENO}`}
+                className="text-lg font-black text-[#C9A227] transition-all hover:text-white"
               >
-                +91 XXXXXXXXXX
+                +91 {import.meta.env.VITE_PHONENO}
               </a>
             </div>
           </div>
@@ -37,17 +40,17 @@ function Footer() {
             <div className="flex flex-col space-y-3">
               <Link
                 to="/property/inquiry/-"
-                className="w-fit text-sm font-medium text-[#1D4ED8] hover:text-white transition-colors"
+                className="w-fit text-sm font-black uppercase tracking-widest text-[#1D4ED8] transition-all hover:text-white"
               >
                 Request Enquiry &rarr;
               </Link>
               <div className="flex items-center gap-2 text-sm">
                 <span className="text-[#6B7280]">Contact:</span>
                 <a
-                  href="mailto:contact@bluedoorhomes.com"
+                  href={`mailto:${import.meta.env.VITE_EMAILADDRESS}`}
                   className="text-[#F8FAFC] hover:text-[#C9A227] transition-colors"
                 >
-                  contact@bluedoorhomes.com
+                  {import.meta.env.VITE_EMAILADDRESS}
                 </a>
               </div>
             </div>
@@ -65,12 +68,12 @@ function Footer() {
             {!isSignedIn && (
               <div className="flex items-center gap-3">
                 <SignInButton mode="modal">
-                  <button className="rounded-md border border-[#C9A227] px-4 py-2 text-sm font-medium text-[#C9A227] hover:bg-[#C9A227] hover:text-[#0F172A] transition-colors">
+                  <button className="rounded-lg border border-[#C9A227]/50 px-5 py-2 text-sm font-bold text-[#C9A227] transition-all hover:bg-[#C9A227] hover:text-[#0F172A] active:scale-95">
                     Sign In
                   </button>
                 </SignInButton>
                 <SignUpButton mode="modal">
-                  <button className="rounded-md bg-[#1D4ED8] px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-800 transition-colors">
+                  <button className="rounded-lg bg-[#1D4ED8] px-5 py-2 text-sm font-bold text-white shadow-lg shadow-blue-500/10 transition-all hover:bg-blue-700 active:scale-95">
                     Sign Up
                   </button>
                 </SignUpButton>

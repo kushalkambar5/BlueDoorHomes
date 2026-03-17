@@ -31,7 +31,7 @@ function Testimonials() {
           What Our Clients Say
         </h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
-          Experience the excellence of BlueDoorHomes through the voices of those we've served.
+          Experience the excellence of <span className="text-[#1D4ED8]">Blue</span>Door<span className="text-[#C9A227]">Homes</span> through the voices of those we've served.
         </p>
       </div>
 
