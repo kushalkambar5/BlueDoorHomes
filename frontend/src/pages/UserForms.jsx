@@ -94,7 +94,7 @@ function UserForms() {
               <thead className="bg-gray-50 border-b border-gray-100">
                 <tr>
                   <th className="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">Applicant</th>
-                  <th className="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">Property ID</th>
+                  <th className="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">Property Name</th>
                   <th className="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">Budget</th>
                   <th className="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">Message</th>
                   <th className="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">Status</th>
@@ -117,8 +117,8 @@ function UserForms() {
                         <div className="text-[10px] text-gray-400 mt-1">{new Date(lead.createdAt).toLocaleDateString()}</div>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="text-sm text-gray-600 font-mono bg-gray-100 px-2 py-0.5 rounded">
-                          {lead.property_id || "N/A"}
+                        <span className="text-sm text-primary font-bold">
+                          {lead.property_id?.title || "N/A"}
                         </span>
                       </td>
                       <td className="px-6 py-4">

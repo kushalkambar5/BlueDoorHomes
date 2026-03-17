@@ -208,8 +208,11 @@ function PropertyDetail() {
                <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
                <h3 className="text-xl font-bold mb-3 relative z-10">Interested?</h3>
                <p className="text-white/80 text-sm mb-6 relative z-10">Contact us today to schedule a viewing or for more details about this property.</p>
-               <Link to="/#contact" className="bg-white text-primary px-6 py-2.5 rounded-lg font-bold text-sm inline-block relative z-10 hover:bg-white/90 transition-colors">
-                 Get In Touch
+               <Link 
+                 to={`/property/inquiry/${property._id}`}
+                 className="bg-white text-primary px-6 py-2.5 rounded-lg font-bold text-sm inline-block relative z-10 hover:bg-white/90 transition-colors"
+               >
+                 Request a Inquiry for this property
                </Link>
             </div>
           </div>

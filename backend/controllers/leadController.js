@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import handleAsyncError from "../middlewares/handleAsyncError.js";
 import Lead from "../models/leadModel.js";
+import Property from "../models/propertyModel.js";
 import sendEmail from "../utils/sendEmail.js";
 import dotenv from "dotenv";
 dotenv.config();
@@ -41,7 +42,7 @@ export const deleteLead = handleAsyncError(async (req, res) => {
 
 export const getLeadById = handleAsyncError(async (req, res) => {
     try {
-        const lead = await Lead.findById(req.params.id);
+        const lead = await Lead.findById(req.params.id).populate("property_id", "title");
         res.status(200).json(lead);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -50,7 +51,7 @@ export const getLeadById = handleAsyncError(async (req, res) => {
 
 export const getLeads = handleAsyncError(async (req, res) => {
     try {
-        const leads = await Lead.find();
+        const leads = await Lead.find().populate("property_id", "title").sort({ createdAt: -1 });
         res.status(200).json(leads);
     } catch (error) {
         res.status(500).json({ error: error.message });
