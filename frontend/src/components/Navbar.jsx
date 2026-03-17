@@ -10,7 +10,30 @@ function Navbar() {
   const { isSignedIn } = useAuth();
   const { role, dbUser, isLoading, error } = useUserContext();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const location = useLocation();
+
+  useEffect(() => {
+    const controlNavbar = () => {
+      if (typeof window !== 'undefined') {
+        if (window.scrollY > lastScrollY && window.scrollY > 100) { 
+          // scrolling down
+          setIsVisible(false);
+          setMobileMenuOpen(false);
+        } else { 
+          // scrolling up
+          setIsVisible(true);
+        }
+        setLastScrollY(window.scrollY);
+      }
+    };
+
+    window.addEventListener('scroll', controlNavbar);
+    return () => {
+      window.removeEventListener('scroll', controlNavbar);
+    };
+  }, [lastScrollY]);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -18,7 +41,9 @@ function Navbar() {
   }, [location]);
 
   return (
-    <nav className="sticky top-0 z-50 w-full transition-all duration-300 border-b border-white/5 bg-[#0F172A]/90 backdrop-blur-md px-4 py-4 shadow-xl">
+    <nav className={`fixed top-0 z-50 w-full transition-all duration-300 border-b border-white/5 bg-[#0F172A]/90 backdrop-blur-md px-4 py-4 shadow-xl ${
+      isVisible ? "translate-y-0" : "-translate-y-full"
+    }`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
         {/* Logo */}
         <Link
@@ -96,7 +121,7 @@ function Navbar() {
                     to="/user-forms"
                     className="whitespace-nowrap rounded-lg border border-[#C9A227]/40 px-2 py-1 lg:px-3 lg:py-1.5 text-[10px] lg:text-xs text-[#C9A227] font-bold tracking-tight transition-all duration-300 hover:bg-[#C9A227] hover:text-[#0F172A] hover:scale-105"
                   >
-                    Leads
+                    Forms
                   </Link>
                 </div>
               )}
