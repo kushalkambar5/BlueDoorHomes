@@ -1,4 +1,5 @@
 import { useAuth, SignInButton, SignUpButton, UserButton } from "@clerk/react";
+import { Link } from "react-router-dom";
 
 function Footer() {
   const { isSignedIn } = useAuth();
@@ -34,12 +35,12 @@ function Footer() {
               Reach Out
             </h3>
             <div className="flex flex-col space-y-3">
-              <a
-                href="/enquiry"
+              <Link
+                to="/property/inquiry/-"
                 className="w-fit text-sm font-medium text-[#1D4ED8] hover:text-white transition-colors"
               >
                 Request Enquiry &rarr;
-              </a>
+              </Link>
               <div className="flex items-center gap-2 text-sm">
                 <span className="text-[#6B7280]">Contact:</span>
                 <a

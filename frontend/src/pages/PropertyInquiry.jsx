@@ -18,6 +18,10 @@ function PropertyInquiry() {
   });
 
   useEffect(() => {
+    if (id === "-") {
+      setLoading(false);
+      return;
+    }
     const fetchProperty = async () => {
       try {
         const response = await getPropertyById(id);
@@ -41,10 +45,10 @@ function PropertyInquiry() {
     try {
       await createLead({
         ...formData,
-        property_id: id,
+        property_id: id === "-" ? null : id,
       });
       alert("Inquiry submitted successfully! We will contact you soon.");
-      navigate(`/property/${id}`);
+      navigate(id === "-" ? "/" : `/property/${id}`);
     } catch (error) {
       console.error("Failed to submit inquiry", error);
       alert("Failed to submit inquiry. Please try again.");
@@ -61,7 +65,7 @@ function PropertyInquiry() {
     );
   }
 
-  if (!property) {
+  if (!property && id !== "-") {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col">
         <PageNavbar title="Property Not Found" />
@@ -75,25 +79,34 @@ function PropertyInquiry() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <PageNavbar title={`Inquiry: ${property.title}`} />
+      <PageNavbar title={id === "-" ? "General Inquiry" : `Inquiry: ${property.title}`} />
       
       <div className="container mx-auto px-4 py-8 max-w-2xl flex-grow">
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           {/* Property Context Header */}
-          <div className="bg-primary/5 p-6 border-b border-gray-100 flex items-center gap-4">
-            {property.mediaList && property.mediaList[0] && (
-              <img 
-                src={property.mediaList[0].url} 
-                alt={property.title} 
-                className="w-20 h-20 object-cover rounded-lg shadow-sm"
-              />
-            )}
-            <div>
-              <h2 className="text-xl font-bold text-primary">{property.title}</h2>
-              <p className="text-accent font-bold text-lg">₹{property.price?.toLocaleString()}</p>
-              <p className="text-text-secondary text-sm">📍 {property.location?.city}, {property.location?.locality}</p>
+          {id !== "-" && property && (
+            <div className="bg-primary/5 p-6 border-b border-gray-100 flex items-center gap-4">
+              {property.mediaList && property.mediaList[0] && (
+                <img 
+                  src={property.mediaList[0].url} 
+                  alt={property.title} 
+                  className="w-20 h-20 object-cover rounded-lg shadow-sm"
+                />
+              )}
+              <div>
+                <h2 className="text-xl font-bold text-primary">{property.title}</h2>
+                <p className="text-accent font-bold text-lg">₹{property.price?.toLocaleString()}</p>
+                <p className="text-text-secondary text-sm">📍 {property.location?.city}, {property.location?.locality}</p>
+              </div>
             </div>
-          </div>
+          )}
+
+          {id === "-" && (
+             <div className="bg-primary/5 p-8 border-b border-gray-100 text-center">
+                <h2 className="text-2xl font-bold text-primary">General Inquiry</h2>
+                <p className="text-text-secondary mt-2">Tell us what you're looking for, and we'll help you find it.</p>
+             </div>
+          )}
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="p-8 space-y-6">

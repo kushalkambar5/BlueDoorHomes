@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const BANNER_IMAGES = [
   "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
@@ -10,6 +10,7 @@ const BANNER_IMAGES = [
 
 function Landing() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -61,10 +62,7 @@ function Landing() {
           See Properties
         </Link>
         <button
-          onClick={() => {
-            // Replace with actual logic or link to contact section
-            window.location.href = "mailto:enquiry@bluedoorhomes.com";
-          }}
+          onClick={() => navigate("/property/inquiry/-")}
           className="w-full sm:w-auto px-8 py-3.5 bg-white text-primary hover:bg-gray-100 font-bold rounded-full shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-center"
         >
           Request Enquiry

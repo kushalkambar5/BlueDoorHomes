@@ -5,8 +5,8 @@ import {
   getAllTestimonials,
   getTestimonialById,
   updateTestimonial,
-} from "../controllers/testimonialController";
-import roleBasedAccess from "../middlewares/userAuth";
+} from "../controllers/testimonialController.js";
+import roleBasedAccess from "../middlewares/userAuth.js";
 
 const router = express.Router();
 

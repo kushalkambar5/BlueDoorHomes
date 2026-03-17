@@ -1,22 +1,35 @@
 import React, { useState } from "react";
+import { createLead } from "../api/leadApi";
 
 function Contact() {
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
     phone: "",
+    budget: "",
     message: ""
   });
+  const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Usually this would call an API to submit the contact form
-    alert("Thank you for your message. Our team will get back to you shortly.");
-    setFormData({ name: "", email: "", phone: "", message: "" });
+    setSubmitting(true);
+    try {
+      await createLead({
+        ...formData,
+        property_id: null, // General inquiry from home page
+      });
+      alert("Thank you for your message. Our team will get back to you shortly.");
+      setFormData({ name: "", phone: "", budget: "", message: "" });
+    } catch (error) {
+      console.error("Failed to submit inquiry", error);
+      alert("Failed to submit inquiry. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -112,7 +125,7 @@ function Contact() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">First & Last Name</label>
+                  <label htmlFor="name" className="block text-sm font-semibold text-text-primary mb-1">First & Last Name</label>
                   <input
                     type="text"
                     id="name"
@@ -120,40 +133,41 @@ function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full rounded-md border border-gray-300 px-4 py-3 text-gray-900 focus:border-[#1D4ED8] focus:ring-[#1D4ED8] focus:outline-none focus:ring-1 transition-colors"
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-cta/20 focus:border-cta outline-none transition-all"
                     placeholder="John Doe"
                   />
                 </div>
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                  <label htmlFor="phone" className="block text-sm font-semibold text-text-primary mb-1">Phone Number</label>
                   <input
                     type="tel"
                     id="phone"
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full rounded-md border border-gray-300 px-4 py-3 text-gray-900 focus:border-[#1D4ED8] focus:ring-[#1D4ED8] focus:outline-none focus:ring-1 transition-colors"
-                    placeholder="+1 (555) 000-0000"
+                    required
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-cta/20 focus:border-cta outline-none transition-all"
+                    placeholder="Your Phone Number"
                   />
                 </div>
               </div>
               
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                <label htmlFor="budget" className="block text-sm font-semibold text-text-primary mb-1">Your Budget (₹)</label>
                 <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
+                  type="number"
+                  id="budget"
+                  name="budget"
+                  value={formData.budget}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-md border border-gray-300 px-4 py-3 text-gray-900 focus:border-[#1D4ED8] focus:ring-[#1D4ED8] focus:outline-none focus:ring-1 transition-colors"
-                  placeholder="john@example.com"
+                  className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-cta/20 focus:border-cta outline-none transition-all"
+                  placeholder="Enter your budget"
                 />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                <label htmlFor="message" className="block text-sm font-semibold text-text-primary mb-1">Brief Description</label>
                 <textarea
                   id="message"
                   name="message"
@@ -161,7 +175,7 @@ function Contact() {
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-md border border-gray-300 px-4 py-3 text-gray-900 focus:border-[#1D4ED8] focus:ring-[#1D4ED8] focus:outline-none focus:ring-1 transition-colors resize-none"
+                  className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-cta/20 focus:border-cta outline-none transition-all resize-none"
                   placeholder="I'm interested in..."
                 ></textarea>
               </div>
@@ -169,9 +183,10 @@ function Contact() {
               <div className="flex justify-end pt-2">
                 <button
                   type="submit"
-                  className="inline-flex items-center justify-center w-full sm:w-auto rounded-md bg-[#1D4ED8] px-8 py-3.5 text-sm font-semibold text-white shadow-md hover:bg-blue-800 transition-all duration-300 hover:shadow-lg transform hover:-translate-y-0.5"
+                  disabled={submitting}
+                  className="inline-flex items-center justify-center w-full sm:w-auto rounded-md bg-[#1D4ED8] px-8 py-3.5 text-sm font-semibold text-white shadow-md hover:bg-blue-800 transition-all duration-300 hover:shadow-lg transform hover:-translate-y-0.5 disabled:opacity-50 disabled:transform-none"
                 >
-                  Send Message
+                  {submitting ? "Sending..." : "Send Message"}
                 </button>
               </div>
             </form>

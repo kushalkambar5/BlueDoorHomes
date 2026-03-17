@@ -7,8 +7,10 @@ import Properties from "./pages/Properties.jsx";
 import CreateProperty from "./pages/CreateProperty.jsx";
 import UpdateProperty from "./pages/UpdateProperty.jsx";
 import PropertyDetail from "./pages/PropertyDetail.jsx";
-import PropertyInquiry from "./pages/PropertyInquiry.jsx";
-import UserForms from "./pages/UserForms.jsx";
+import PropertyInquiry from "./pages/PropertyInquiry";
+import CreateTestimonial from "./pages/CreateTestimonial";
+import EditTestimonial from "./pages/EditTestimonial";
+import UserForms from "./pages/UserForms";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path="/create-property" element={<CreateProperty />} />
           <Route path="/update-property/:id" element={<UpdateProperty />} />
           <Route path="/user-forms" element={<UserForms />} />
+        <Route path="/create-testimonials" element={<CreateTestimonial />} />
+        <Route path="/edit-testimonial/:id" element={<EditTestimonial />} />
         </Routes>
       </Router>
     </>

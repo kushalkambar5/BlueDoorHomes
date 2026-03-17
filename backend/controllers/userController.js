@@ -11,15 +11,12 @@ import { getAuth } from "@clerk/express";
 export const getUserProfile = handleAsyncError(async (req, res, next) => {
   const auth = getAuth(req);
   const clerkId = auth?.userId;
-  console.log("➡️ API GET /me Hit | clerkId from auth token:", clerkId);
-
   if (!clerkId) {
     console.error("❌ Unauthorized: clerkId is missing from req.auth");
     return next(new HandleError("Unauthorized", 401));
   }
 
   const user = await User.findOne({ clerkId });
-  console.log("🔍 DB Query Result for user:", user ? "Found" : "Not Found");
 
   if (!user) {
     console.error(`❌ User not found in DB for clerkId: ${clerkId}`);

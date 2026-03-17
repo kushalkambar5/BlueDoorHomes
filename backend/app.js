@@ -8,6 +8,7 @@ import propertyRoutes from "./routes/propertyRoutes.js";
 import cloudinaryRoutes from "./routes/cloudinaryRoutes.js";
 import webhookRoutes from "./routes/webhookRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import testimonialRoutes from "./routes/testimonialRoutes.js";
 import cors from "cors";
 
 app.use(
@@ -33,6 +34,7 @@ app.use("/api/v1/properties", propertyRoutes);
 app.use("/api/v1/leads", leadRoutes);
 app.use("/api/v1/cloudinary", cloudinaryRoutes);
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/testimonials", testimonialRoutes);
 
 app.use(errorMiddleware);
 

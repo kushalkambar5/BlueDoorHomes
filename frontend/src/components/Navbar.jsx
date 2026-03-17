@@ -75,7 +75,7 @@ function Navbar() {
             Call Now
           </a>
           <Link
-            to="/enquiry"
+            to="/property/inquiry/-"
             className="rounded-md bg-[#1D4ED8] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-800"
           >
             Request Enquiry
@@ -215,7 +215,7 @@ function Navbar() {
               Call Now: +91 99999 99999
             </a>
             <Link
-              to="/enquiry"
+              to="/property/inquiry/-"
               className="inline-block w-fit rounded-md bg-[#1D4ED8] px-4 py-2 text-sm font-semibold text-white shadow-sm"
             >
               Request Enquiry

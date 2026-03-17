@@ -18,6 +18,9 @@ const testimonialSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    image_public_id: {
+      type: String,
+    },
     property_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Property",
