@@ -1,8 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "@clerk/react";
-import axios from "axios";
-
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+import axiosInstance from "../api/axiosInstance";
 
 const UserContext = createContext();
 
@@ -28,7 +26,7 @@ export const UserProvider = ({ children }) => {
         const token = await getToken();
         if (!token) return;
 
-        const response = await axios.get(`${API_URL}/api/v1/users/me`, {
+        const response = await axiosInstance.get("/v1/users/me", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
