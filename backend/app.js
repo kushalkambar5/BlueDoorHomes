@@ -30,14 +30,15 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(clerkMiddleware());
 
-app.use("/", (req, res) => {
-  res.send("Hello BlueDoorHomes!");
-});
 app.use("/api/v1/properties", propertyRoutes);
 app.use("/api/v1/leads", leadRoutes);
 app.use("/api/v1/cloudinary", cloudinaryRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/testimonials", testimonialRoutes);
+
+app.use("/", (req, res) => {
+  res.send("Hello BlueDoorHomes!");
+});
 
 app.use(errorMiddleware);
 
