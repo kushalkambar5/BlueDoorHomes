@@ -1,6 +1,6 @@
 import axiosInstance from "./axiosInstance";
 
-const API_URL = "/api/v1/properties";
+const API_URL = "/v1/properties";
 
 export const createProperty = async (propertyData) => {
   const response = await axiosInstance.post(API_URL, propertyData);

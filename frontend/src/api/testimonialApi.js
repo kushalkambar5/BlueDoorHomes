@@ -1,6 +1,6 @@
 import axiosInstance from "./axiosInstance";
 
-const API_URL = "/api/v1/testimonials";
+const API_URL = "/v1/testimonials";
 
 export const getAllTestimonials = async () => {
     const response = await axiosInstance.get(API_URL);

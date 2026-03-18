@@ -1,6 +1,6 @@
 import axiosInstance from "./axiosInstance";
 
-const API_URL = "/api/v1/leads";
+const API_URL = "/v1/leads";
 
 export const createLead = async (leadData) => {
   const response = await axiosInstance.post(API_URL, leadData);
