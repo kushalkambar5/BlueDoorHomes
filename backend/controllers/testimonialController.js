@@ -10,7 +10,7 @@ export const createTestimonial = handleAsyncError(async (req, res) => {
         rating, 
         image_url, 
         image_public_id,
-        property_id 
+        property_id: property_id || null 
     });
     res.status(201).json({ success: true, data: testimonial });
 });
@@ -31,7 +31,8 @@ export const getTestimonialById = handleAsyncError(async (req, res) => {
 
 export const updateTestimonial = handleAsyncError(async (req, res) => {
     const { id } = req.params;
-    const { client_name, text, rating, image_url, image_public_id, property_id } = req.body;
+    const { client_name, text, rating, image_url, image_public_id, property_id: rawPropertyId } = req.body;
+    const property_id = rawPropertyId || null;
     
     const oldTestimonial = await Testimonial.findById(id);
     if (!oldTestimonial) {
