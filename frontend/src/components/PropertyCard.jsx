@@ -81,16 +81,16 @@ const PropertyCard = ({ property, isSignedIn, role, handleDelete, navigate }) =>
 
       {/* Content */}
       <div className="p-5 flex flex-col flex-grow">
-        <div className="flex items-center justify-between mb-2 mt-2 border-b border-gray-100 pb-3">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-2 mt-2 border-b border-gray-100 pb-3 gap-1 sm:gap-2">
           <Link to={`/property/${property._id}`}>
             <h2
-              className="text-xl font-bold text-text-primary line-clamp-1 hover:text-cta transition-colors"
+              className="text-lg sm:text-xl font-bold text-text-primary line-clamp-1 hover:text-cta transition-colors"
               title={property.title}
             >
               {property.title}
             </h2>
           </Link>
-          <span className="text-accent font-bold ml-3 text-xl shrink-0">
+          <span className="text-accent font-bold ml-0 sm:ml-3 text-lg sm:text-xl shrink-0">
             ₹{property.price?.toLocaleString()}
           </span>
         </div>

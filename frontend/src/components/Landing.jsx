@@ -42,37 +42,41 @@ function Landing() {
         ))}
       </div>
 
-      {/* Hero Content Overlay */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white pt-20">
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 drop-shadow-lg">
-          Welcome to <span className="text-[#1D4ED8]">Blue</span>Door<span className="text-[#C9A227]">Homes</span>
-        </h1>
-        <p className="text-xl md:text-2xl font-light mb-10 max-w-3xl drop-shadow-md text-gray-200">
-          Find your dream home with premium real estate listings, expert
-          guidance, and trusted service. Redefining modern luxury living.
-        </p>
-      </div>
+      {/* Hero Content & Action Buttons Overlay */}
+      <div className="absolute inset-0 z-10 flex flex-col items-center px-4 text-center text-white pt-24 pb-12 sm:pb-20 overflow-y-auto overflow-x-hidden">
+        
+        {/* Main Text Content */}
+        <div className="flex-1 flex flex-col justify-end sm:justify-center items-center w-full mb-8 sm:mb-0 mt-auto sm:mt-0">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight mb-4 md:mb-6 drop-shadow-lg leading-tight lg:leading-tight">
+            Welcome to <span className="text-[#1D4ED8]">Blue</span>Door<span className="text-[#C9A227]">Homes</span>
+          </h1>
+          <p className="text-lg sm:text-xl md:text-2xl font-light max-w-3xl drop-shadow-md text-gray-200 px-2 sm:px-0">
+            Find your dream home with premium real estate listings, expert
+            guidance, and trusted service. Redefining modern luxury living.
+          </p>
+        </div>
 
-      {/* Bottom Middle Action Buttons */}
-      <div className="absolute bottom-16 left-0 right-0 z-20 flex flex-col sm:flex-row items-center justify-center gap-4 px-4">
-        <Link
-          to="/properties"
-          className="w-full sm:w-auto px-8 py-3.5 bg-cta hover:bg-blue-800 text-white font-bold rounded-full shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-center"
-        >
-          See Properties
-        </Link>
-        <button
-          onClick={() => navigate("/property/inquiry/-")}
-          className="w-full sm:w-auto px-8 py-3.5 bg-white text-primary hover:bg-gray-100 font-bold rounded-full shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-center"
-        >
-          Request Enquiry
-        </button>
-        <a
-          href={`tel:+91${import.meta.env.VITE_PHONENO}`}
-          className="w-full sm:w-auto px-8 py-3.5 bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary font-bold rounded-full shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-center backdrop-blur-sm"
-        >
-          Call Now
-        </a>
+        {/* Action Buttons */}
+        <div className="z-20 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-3xl mx-auto mt-4 sm:mt-10 mb-6">
+          <Link
+            to="/properties"
+            className="w-full sm:w-auto px-6 sm:px-8 py-3.5 bg-cta hover:bg-blue-800 text-white font-bold rounded-full shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-center text-sm sm:text-base"
+          >
+            See Properties
+          </Link>
+          <button
+            onClick={() => navigate("/property/inquiry/-")}
+            className="w-full sm:w-auto px-6 sm:px-8 py-3.5 bg-white text-primary hover:bg-gray-100 font-bold rounded-full shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-center text-sm sm:text-base"
+          >
+            Request Enquiry
+          </button>
+          <a
+            href={`tel:+91${import.meta.env.VITE_PHONENO}`}
+            className="w-full sm:w-auto px-6 sm:px-8 py-3.5 bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary font-bold rounded-full shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-center backdrop-blur-sm text-sm sm:text-base"
+          >
+            Call Now
+          </a>
+        </div>
       </div>
 
       {/* Slide Indicators */}

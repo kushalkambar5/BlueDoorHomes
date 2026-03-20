@@ -41,7 +41,7 @@ function Testimonials() {
           {[...testimonials, ...testimonials, ...testimonials, ...testimonials].map((t, index) => (
             <div 
               key={`${t._id}-${index}`}
-              className="flex-shrink-0 w-80 md:w-96 mx-4 bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+              className="flex-shrink-0 w-[280px] sm:w-80 md:w-96 mx-4 bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
             >
               <div className="flex items-center gap-4 mb-6">
                 <img 

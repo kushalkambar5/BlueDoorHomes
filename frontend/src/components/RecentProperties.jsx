@@ -70,7 +70,7 @@ function RecentProperties() {
           {[...properties, ...properties, ...properties, ...properties].map((p, index) => (
             <div 
               key={`${p._id}-${index}`}
-              className="flex-shrink-0 w-80 md:w-96 mx-4 pb-8 pt-4 pointer-events-auto"
+              className="flex-shrink-0 w-[280px] sm:w-80 md:w-96 mx-4 pb-8 pt-4 pointer-events-auto"
             >
               <PropertyCard 
                 property={p} 

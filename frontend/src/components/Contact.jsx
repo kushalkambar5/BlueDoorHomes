@@ -55,7 +55,7 @@ function Contact() {
         <div className="bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col lg:flex-row border border-gray-100">
           
           {/* Contact Info Side */}
-          <div className="lg:w-2/5 bg-[#0F172A] text-white p-10 flex flex-col justify-between relative overflow-hidden">
+          <div className="lg:w-2/5 bg-[#0F172A] text-white p-6 sm:p-10 flex flex-col justify-between relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full transform translate-x-1/2 -translate-y-1/2"></div>
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#1D4ED8]/20 rounded-full transform -translate-x-1/2 translate-y-1/2 filter blur-2xl"></div>
 
@@ -129,7 +129,7 @@ function Contact() {
           </div>
 
           {/* Form Side */}
-          <div className="lg:w-3/5 p-10 lg:p-14">
+          <div className="lg:w-3/5 p-6 sm:p-10 lg:p-14">
             <h4 className="text-2xl font-bold text-[#0F172A] mb-8">Send a Message</h4>
             
             <form onSubmit={handleSubmit} className="space-y-6">

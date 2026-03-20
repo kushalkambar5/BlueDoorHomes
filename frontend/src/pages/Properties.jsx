@@ -113,9 +113,9 @@ function Properties() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <PageNavbar title="Properties Listing" />
-      <div className="container mx-auto px-4 py-8 max-w-7xl flex-grow bg-white my-8 rounded-xl shadow-sm border border-gray-100">
-        <div className="flex justify-between items-center mb-6 border-b border-gray-200 pb-4">
-          <h1 className="text-3xl font-bold text-primary">
+      <div className="container mx-auto px-4 py-8 max-w-7xl flex-grow bg-white my-4 sm:my-8 rounded-xl shadow-sm border border-gray-100">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 border-b border-gray-200 pb-4">
+          <h1 className="text-2xl sm:text-3xl font-bold text-primary">
             Properties Listing
           </h1>
           {isSignedIn && role === "admin" && (
@@ -135,7 +135,7 @@ function Properties() {
               <button
                 key={value}
                 onClick={() => { setSelectedType(value); setCurrentPage(1); }}
-                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold border transition-all duration-200 cursor-pointer ${
+                className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold border transition-all duration-200 cursor-pointer ${
                   selectedType === value
                     ? "bg-cta text-white border-cta shadow-md shadow-cta/25 scale-105"
                     : "bg-white text-text-secondary border-gray-200 hover:border-cta/40 hover:text-cta hover:bg-cta/5"
@@ -191,11 +191,11 @@ function Properties() {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="flex items-center justify-center gap-2 mt-10 pt-6 border-t border-gray-100">
+              <div className="flex flex-wrap items-center justify-center gap-2 mt-8 sm:mt-10 pt-6 border-t border-gray-100">
                 <button
                   onClick={() => { setCurrentPage((p) => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                   disabled={currentPage === 1}
-                  className="px-4 py-2 rounded-lg text-sm font-semibold border border-gray-200 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-cta hover:text-white hover:border-cta"
+                  className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm font-semibold border border-gray-200 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-cta hover:text-white hover:border-cta"
                 >
                   ← Prev
                 </button>
@@ -204,7 +204,7 @@ function Properties() {
                   <button
                     key={page}
                     onClick={() => { setCurrentPage(page); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                    className={`w-10 h-10 rounded-lg text-sm font-bold transition-all duration-200 ${
+                    className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 ${
                       currentPage === page
                         ? "bg-cta text-white shadow-md shadow-cta/25"
                         : "border border-gray-200 text-text-secondary hover:bg-cta/10 hover:text-cta hover:border-cta/30"
@@ -217,7 +217,7 @@ function Properties() {
                 <button
                   onClick={() => { setCurrentPage((p) => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                   disabled={currentPage === totalPages}
-                  className="px-4 py-2 rounded-lg text-sm font-semibold border border-gray-200 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-cta hover:text-white hover:border-cta"
+                  className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm font-semibold border border-gray-200 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-cta hover:text-white hover:border-cta"
                 >
                   Next →
                 </button>
