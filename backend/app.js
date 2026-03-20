@@ -6,8 +6,6 @@ import { clerkMiddleware } from "@clerk/express";
 import leadRoutes from "./routes/leadRoutes.js";
 import propertyRoutes from "./routes/propertyRoutes.js";
 import cloudinaryRoutes from "./routes/cloudinaryRoutes.js";
-import webhookRoutes from "./routes/webhookRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
 import testimonialRoutes from "./routes/testimonialRoutes.js";
 import cors from "cors";
 
@@ -18,13 +16,6 @@ app.use(
   }),
 );
 
-// Webhook route MUST be before express.json() because Svix requires the raw request body
-app.use(
-  "/api/v1/webhooks",
-  express.raw({ type: "application/json" }),
-  webhookRoutes,
-);
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -33,7 +24,6 @@ app.use(clerkMiddleware());
 app.use("/api/v1/properties", propertyRoutes);
 app.use("/api/v1/leads", leadRoutes);
 app.use("/api/v1/cloudinary", cloudinaryRoutes);
-app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/testimonials", testimonialRoutes);
 
 app.use("/", (req, res) => {

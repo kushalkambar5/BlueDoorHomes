@@ -8,7 +8,7 @@ import { useUserContext } from "../context/UserContext";
 
 function Navbar() {
   const { isSignedIn } = useAuth();
-  const { role, dbUser, isLoading, error } = useUserContext();
+  const { role } = useUserContext();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);

@@ -1,59 +1,17 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { useAuth } from "@clerk/react";
-import axiosInstance from "../api/axiosInstance";
+import React, { createContext, useContext } from "react";
+import { useUser } from "@clerk/react";
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const { isLoaded, isSignedIn, getToken, userId } = useAuth();
-  const [dbUser, setDbUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const { isLoaded, isSignedIn, user } = useUser();
+  const role = isSignedIn ? (user?.publicMetadata?.role || "user") : null;
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      if (!isLoaded) return;
-      
-      if (!isSignedIn) {
-        setDbUser(null);
-        return;
-      }
-
-      setIsLoading(true);
-      setError(null);
-
-      try {
-        const token = await getToken();
-        if (!token) return;
-
-        const response = await axiosInstance.get("/v1/users/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (response.data.success) {
-          setDbUser(response.data.user);
-        }
-      } catch (err) {
-        console.error("Failed to fetch user data:", err);
-        setError(err.response?.data?.message || err.message || "Failed to fetch user data");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchUser();
-  }, [isLoaded, isSignedIn, userId, getToken]);
-
-  const value = {
-    dbUser,
-    role: isSignedIn ? (dbUser?.role || "user") : null,
-    isLoading,
-    error,
-  };
-
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={{ role, isLoaded, isSignedIn, user }}>
+      {children}
+    </UserContext.Provider>
+  );
 };
 
 export const useUserContext = () => {

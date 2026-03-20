@@ -1,4 +1,4 @@
-import User from "../models/userModel.js";
+
 import handleAsyncError from "../middlewares/handleAsyncError.js";
 import Lead from "../models/leadModel.js";
 import Property from "../models/propertyModel.js";
