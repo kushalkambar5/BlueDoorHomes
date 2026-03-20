@@ -56,7 +56,7 @@ function CreateTestimonial() {
     setLoading(true);
     try {
       // 1. Upload image to Cloudinary
-      const sigRes = await api.get("/api/v1/cloudinary/signature");
+      const sigRes = await api.get("/v1/cloudinary/signature");
       const { timestamp, signature } = sigRes.data;
       
       const uploadData = new FormData();

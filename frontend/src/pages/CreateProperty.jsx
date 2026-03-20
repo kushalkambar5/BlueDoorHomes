@@ -46,7 +46,7 @@ function CreateProperty() {
       const uploadedMedia = [];
       for (const file of mediaFiles) {
         // Fetch signature using authenticated api
-        const sigRes = await api.get("/api/v1/cloudinary/signature");
+        const sigRes = await api.get("/v1/cloudinary/signature");
         const { timestamp, signature } = sigRes.data;
         const uploadFormData = new FormData();
         uploadFormData.append("file", file);
@@ -96,7 +96,7 @@ function CreateProperty() {
       };
 
       // 3. Call API
-      await api.post("/api/v1/properties", payload);
+      await api.post("/v1/properties", payload);
       alert("Property created successfully!");
       navigate("/properties");
     } catch (error) {

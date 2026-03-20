@@ -72,7 +72,7 @@ function EditTestimonial() {
 
       // 1. Upload new image if selected
       if (imageFile) {
-        const sigRes = await api.get("/api/v1/cloudinary/signature");
+        const sigRes = await api.get("/v1/cloudinary/signature");
         const { timestamp, signature } = sigRes.data;
         
         const uploadData = new FormData();
