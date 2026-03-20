@@ -61,8 +61,14 @@ function Footer() {
             <h3 className="text-sm font-semibold uppercase tracking-wider text-[#F8FAFC]">
               My Account
             </h3>
-            <div className="text-sm text-[#6B7280] mb-2">
-              Sign in to manage your properties and preferences.
+            <div className="text-sm text-[#6B7280] mb-2 flex flex-col gap-1.5">
+              <span>Sign in to manage your properties and preferences.</span>
+              <span className="text-yellow-500/90 font-bold text-xs tracking-wider flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+                  <path fillRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                </svg>
+                ONLY FOR ADMIN
+              </span>
             </div>
 
             {!isSignedIn && (
