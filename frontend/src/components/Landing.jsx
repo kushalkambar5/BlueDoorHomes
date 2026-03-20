@@ -68,7 +68,7 @@ function Landing() {
           Request Enquiry
         </button>
         <a
-          href="tel:+1234567890"
+          href={`tel:+91${import.meta.env.VITE_PHONENO}`}
           className="w-full sm:w-auto px-8 py-3.5 bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary font-bold rounded-full shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-center backdrop-blur-sm"
         >
           Call Now
