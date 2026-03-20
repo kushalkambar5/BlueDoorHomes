@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getProperties, deleteProperty } from "../api/propertyApi";
 import { useAuth } from "@clerk/react";
@@ -6,11 +6,23 @@ import PageNavbar from "../components/PageNavbar";
 import { useUserContext } from "../context/UserContext";
 import PropertyCard from "../components/PropertyCard";
 
+const PROPERTY_TYPES = [
+  { value: "all", label: "All", icon: "🏘️" },
+  { value: "house", label: "House", icon: "🏠" },
+  { value: "apartment", label: "Apartment", icon: "🏢" },
+  { value: "commercial", label: "Commercial", icon: "🏪" },
+  { value: "land", label: "Land", icon: "🌍" },
+];
+
+const ITEMS_PER_PAGE = 10;
+
 function Properties() {
   const { isSignedIn } = useAuth();
   const { role } = useUserContext();
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedType, setSelectedType] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
 
   const fetchProperties = async () => {
@@ -57,6 +69,39 @@ function Properties() {
     }
   };
 
+  // Reset to page 1 when filter changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedType]);
+
+  // Filtered properties based on selected type
+  const filteredProperties = useMemo(() => {
+    if (selectedType === "all") return properties;
+    return properties.filter(
+      (p) => p.property_type?.toLowerCase() === selectedType
+    );
+  }, [properties, selectedType]);
+
+  // Pagination
+  const totalPages = Math.ceil(filteredProperties.length / ITEMS_PER_PAGE);
+  const paginatedProperties = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredProperties.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredProperties, currentPage]);
+
+  // Count per type for badge display
+  const typeCounts = useMemo(() => {
+    const counts = { all: properties.length };
+    PROPERTY_TYPES.forEach(({ value }) => {
+      if (value !== "all") {
+        counts[value] = properties.filter(
+          (p) => p.property_type?.toLowerCase() === value
+        ).length;
+      }
+    });
+    return counts;
+  }, [properties]);
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -69,7 +114,7 @@ function Properties() {
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <PageNavbar title="Properties Listing" />
       <div className="container mx-auto px-4 py-8 max-w-7xl flex-grow bg-white my-8 rounded-xl shadow-sm border border-gray-100">
-        <div className="flex justify-between items-center mb-8 border-b border-gray-200 pb-4">
+        <div className="flex justify-between items-center mb-6 border-b border-gray-200 pb-4">
           <h1 className="text-3xl font-bold text-primary">
             Properties Listing
           </h1>
@@ -83,25 +128,107 @@ function Properties() {
           )}
         </div>
 
-        {properties.length === 0 ? (
-          <div className="text-center py-16 bg-white shadow-sm rounded-xl border border-gray-100">
-            <p className="text-text-secondary text-lg mb-4">
-              No properties uploaded yet.
-            </p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {properties.map((property) => (
-              <PropertyCard
-                key={property._id}
-                property={property}
-                isSignedIn={isSignedIn}
-                role={role}
-                handleDelete={handleDelete}
-                navigate={navigate}
-              />
+        {/* Filter Bar */}
+        <div className="mb-8">
+          <div className="flex flex-wrap gap-2">
+            {PROPERTY_TYPES.map(({ value, label, icon }) => (
+              <button
+                key={value}
+                onClick={() => { setSelectedType(value); setCurrentPage(1); }}
+                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold border transition-all duration-200 cursor-pointer ${
+                  selectedType === value
+                    ? "bg-cta text-white border-cta shadow-md shadow-cta/25 scale-105"
+                    : "bg-white text-text-secondary border-gray-200 hover:border-cta/40 hover:text-cta hover:bg-cta/5"
+                }`}
+              >
+                <span className="text-base">{icon}</span>
+                <span>{label}</span>
+                <span
+                  className={`ml-1 text-xs font-bold px-2 py-0.5 rounded-full ${
+                    selectedType === value
+                      ? "bg-white/20 text-white"
+                      : "bg-gray-100 text-text-secondary"
+                  }`}
+                >
+                  {typeCounts[value] || 0}
+                </span>
+              </button>
             ))}
           </div>
+        </div>
+
+        {filteredProperties.length === 0 ? (
+          <div className="text-center py-16 bg-white shadow-sm rounded-xl border border-gray-100">
+            <p className="text-4xl mb-4">🔍</p>
+            <p className="text-text-secondary text-lg mb-2">
+              {selectedType === "all"
+                ? "No properties uploaded yet."
+                : `No ${selectedType} properties found.`}
+            </p>
+            {selectedType !== "all" && (
+              <button
+                onClick={() => setSelectedType("all")}
+                className="mt-3 text-cta hover:underline font-semibold text-sm"
+              >
+                Clear filter & show all
+              </button>
+            )}
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {paginatedProperties.map((property) => (
+                <PropertyCard
+                  key={property._id}
+                  property={property}
+                  isSignedIn={isSignedIn}
+                  role={role}
+                  handleDelete={handleDelete}
+                  navigate={navigate}
+                />
+              ))}
+            </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-2 mt-10 pt-6 border-t border-gray-100">
+                <button
+                  onClick={() => { setCurrentPage((p) => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 rounded-lg text-sm font-semibold border border-gray-200 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-cta hover:text-white hover:border-cta"
+                >
+                  ← Prev
+                </button>
+
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => { setCurrentPage(page); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                    className={`w-10 h-10 rounded-lg text-sm font-bold transition-all duration-200 ${
+                      currentPage === page
+                        ? "bg-cta text-white shadow-md shadow-cta/25"
+                        : "border border-gray-200 text-text-secondary hover:bg-cta/10 hover:text-cta hover:border-cta/30"
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+
+                <button
+                  onClick={() => { setCurrentPage((p) => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  disabled={currentPage === totalPages}
+                  className="px-4 py-2 rounded-lg text-sm font-semibold border border-gray-200 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-cta hover:text-white hover:border-cta"
+                >
+                  Next →
+                </button>
+              </div>
+            )}
+
+            {/* Results summary */}
+            <p className="text-center text-xs text-text-secondary mt-4">
+              Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1}–{Math.min(currentPage * ITEMS_PER_PAGE, filteredProperties.length)} of {filteredProperties.length} properties
+            </p>
+          </>
         )}
       </div>
     </div>

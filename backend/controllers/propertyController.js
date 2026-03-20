@@ -162,7 +162,15 @@ export const deletePropertyMedia = async (req, res, next) => {
 
 export const getProperties = async (req, res, next) => {
   try {
-    const properties = await Property.find().populate("media_ids");
+    const { limit } = req.query;
+
+    let query = Property.find().sort({ createdAt: -1 });
+
+    if (limit) {
+      query = query.limit(parseInt(limit, 10));
+    }
+
+    const properties = await query;
     // Since media_ids is [String] but contains ObjectIds, we might need to be careful.
     // However, Mongoose populate works if the ref is defined, but here it's [String].
     // Let's check the property model again. It is media_ids: [String].

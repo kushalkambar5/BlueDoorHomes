@@ -5,12 +5,14 @@ import Landing from "../components/Landing";
 import About from "../components/About";
 import Testimonials from "../components/Testimonials";
 import Contact from "../components/Contact";
+import RecentProperties from "../components/RecentProperties";
 
 function Home() {
   return (
     <>
       <Navbar />
       <Landing />
+      <RecentProperties />
       <About />
       <Testimonials />
       <Contact />
